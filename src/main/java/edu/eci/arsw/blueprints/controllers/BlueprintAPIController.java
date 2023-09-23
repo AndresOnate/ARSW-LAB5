@@ -17,9 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -33,15 +31,34 @@ public class BlueprintAPIController {
     BlueprintsServices bps;
 
 
-    @RequestMapping(method = RequestMethod.GET,  produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getBlueprints(){
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getBlueprints() {
         try {
             Set<Blueprint> data = bps.getAllBlueprints();
-            return new ResponseEntity<>(data,HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(data, HttpStatus.ACCEPTED);
         } catch (BlueprintNotFoundException ex) {
             Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Error", HttpStatus.NOT_FOUND);
         }
     }
-}
 
+
+    @GetMapping(path = "/{author}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getBlueprintByAuthor(@PathVariable String author) throws BlueprintNotFoundException {
+        Set<Blueprint> data = bps.getBlueprintsByAuthor(author);
+        if (!data.isEmpty()) {
+            return new ResponseEntity<>(data, HttpStatus.ACCEPTED);
+
+        }
+        return new ResponseEntity<>("El autor no existe", HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(path = "/{author}/{bpname}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getBlueprintByAuthorAndName(@PathVariable String author,@PathVariable String bpname ) throws BlueprintNotFoundException {
+        Blueprint data = bps.getBlueprint(author, bpname);
+        if (data != null) {
+            return new ResponseEntity<>(data, HttpStatus.ACCEPTED);
+        }
+        return new ResponseEntity<>("El autor no existe", HttpStatus.NOT_FOUND);
+    }
+}

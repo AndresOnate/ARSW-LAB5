@@ -30,7 +30,7 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
     public InMemoryBlueprintPersistence() {
         //load stub data
         Point[] pts=new Point[]{new Point(140, 140),new Point(115, 115)};
-        Blueprint bp=new Blueprint("Zaha Hadid", "Riverside Museum ",pts);
+        Blueprint bp=new Blueprint("Zaha Hadid", "Riverside Museum",pts);
         blueprints.put(new Tuple<>(bp.getAuthor(),bp.getName()), bp);
         Point[] pts1=new Point[]{new Point(14, 10),new Point(11, 15)};
         Blueprint bp1=new Blueprint("Zaha Hadid", "Centro Acuático de Londres",pts);

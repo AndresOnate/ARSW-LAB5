@@ -48,7 +48,12 @@ public class BlueprintsServices {
      * @throws BlueprintNotFoundException if there is no such blueprint
      */
     public Blueprint getBlueprint(String author,String name) throws BlueprintNotFoundException{
-        return bpf.filterBlueprint(bpp.getBlueprint(author,name));
+        Blueprint blueprint = bpp.getBlueprint(author,name);
+        if(blueprint != null){
+            return bpf.filterBlueprint(blueprint);
+        }
+        return null;
+
     }
     
     /**
@@ -60,5 +65,4 @@ public class BlueprintsServices {
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
         return bpf.filterBlueprints(bpp.getBlueprintsByAuthor(author));
     }
-    
 }
