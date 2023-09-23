@@ -131,8 +131,22 @@ curl --location 'http://localhost:8080/blueprints/' \
 
 
 4. Agregue soporte al verbo PUT para los recursos de la forma '/blueprints/{author}/{bpname}', de manera que sea posible actualizar un plano determinado.
-
-
+```
+curl -i -X PUT -H "Content-Type: application/json" -H "Accept: application/json" http://localhost:8080/blueprints/Camilo/ECI -d '{
+    "author": "Nuevo Autor",
+    "points": [
+        {
+            "x": 150,
+            "y": 150
+        },
+        {
+            "x": 120,
+            "y": 120
+        }
+    ],
+    "name": "Nuevo Nombre"
+}'
+```
 ### Parte III
 
 El componente BlueprintsRESTAPI funcionará en un entorno concurrente. Es decir, atederá múltiples peticiones simultáneamente (con el stack de aplicaciones usado, dichas peticiones se atenderán por defecto a través múltiples de hilos). Dado lo anterior, debe hacer una revisión de su API (una vez funcione), e identificar:
