@@ -102,11 +102,51 @@ Del anterior diagrama de componentes (de alto nivel), se desprendió el siguient
 	Nota: puede basarse en el formato jSON mostrado en el navegador al consultar una orden con el método GET.
 
 
+![image](https://github.com/AndresOnate/ARSW-LAB5/assets/63562181/13c89b33-38d9-4df1-9155-e65fca4f79d8)
+
+```
+curl --location 'http://localhost:8080/blueprints/' \
+--header 'Content-Type: application/json' \
+--data '{
+    "author": "Camilo",
+    "points": [
+        {
+            "x": 140,
+            "y": 140
+        },
+        {
+            "x": 115,
+            "y": 115
+        }
+    ],
+    "name": "ECI"
+}'
+```
+
 3. Teniendo en cuenta el autor y numbre del plano registrado, verifique que el mismo se pueda obtener mediante una petición GET al recurso '/blueprints/{author}/{bpname}' correspondiente.
 
+![image](https://github.com/AndresOnate/ARSW-LAB5/assets/63562181/0713a5a7-05df-4471-a59e-ecdf871c5069)
+
+![image](https://github.com/AndresOnate/ARSW-LAB5/assets/63562181/1737c72f-168f-4637-be2e-74db4ff4e6ed)
+
+
 4. Agregue soporte al verbo PUT para los recursos de la forma '/blueprints/{author}/{bpname}', de manera que sea posible actualizar un plano determinado.
-
-
+```
+curl -i -X PUT -H "Content-Type: application/json" -H "Accept: application/json" http://localhost:8080/blueprints/Camilo/ECI -d '{
+    "author": "Nuevo Autor",
+    "points": [
+        {
+            "x": 150,
+            "y": 150
+        },
+        {
+            "x": 120,
+            "y": 120
+        }
+    ],
+    "name": "Nuevo Nombre"
+}'
+```
 ### Parte III
 
 El componente BlueprintsRESTAPI funcionará en un entorno concurrente. Es decir, atederá múltiples peticiones simultáneamente (con el stack de aplicaciones usado, dichas peticiones se atenderán por defecto a través múltiples de hilos). Dado lo anterior, debe hacer una revisión de su API (una vez funcione), e identificar:
