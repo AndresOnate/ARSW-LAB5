@@ -104,6 +104,24 @@ Del anterior diagrama de componentes (de alto nivel), se desprendió el siguient
 
 ![image](https://github.com/AndresOnate/ARSW-LAB5/assets/63562181/13c89b33-38d9-4df1-9155-e65fca4f79d8)
 
+```
+curl --location 'http://localhost:8080/blueprints/' \
+--header 'Content-Type: application/json' \
+--data '{
+    "author": "Camilo",
+    "points": [
+        {
+            "x": 140,
+            "y": 140
+        },
+        {
+            "x": 115,
+            "y": 115
+        }
+    ],
+    "name": "ECI"
+}'
+```
 
 3. Teniendo en cuenta el autor y numbre del plano registrado, verifique que el mismo se pueda obtener mediante una petición GET al recurso '/blueprints/{author}/{bpname}' correspondiente.
 
