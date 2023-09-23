@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -25,7 +26,7 @@ import java.util.Set;
 @Component
 public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
 
-    private final Map<Tuple<String,String>,Blueprint> blueprints=new HashMap<>();
+    private final ConcurrentHashMap<Tuple<String,String>,Blueprint> blueprints=new ConcurrentHashMap<>();
 
     public InMemoryBlueprintPersistence() {
         //load stub data
@@ -33,10 +34,10 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
         Blueprint bp=new Blueprint("Zaha Hadid", "Riverside Museum",pts);
         blueprints.put(new Tuple<>(bp.getAuthor(),bp.getName()), bp);
         Point[] pts1=new Point[]{new Point(14, 10),new Point(11, 15)};
-        Blueprint bp1=new Blueprint("Zaha Hadid", "Centro Acuático de Londres",pts);
+        Blueprint bp1=new Blueprint("Zaha Hadid", "Centro Acuático de Londres",pts1);
         blueprints.put(new Tuple<>(bp1.getAuthor(),bp1.getName()), bp1);
-        Point[] pts2=new Point[]{new Point(14, 10),new Point(11, 15)};
-        Blueprint bp2=new Blueprint("Richard Meier", "Weill Hall",pts);
+        Point[] pts2=new Point[]{new Point(14, 10),new Point(11, 15), new Point(11, 15)};
+        Blueprint bp2=new Blueprint("Richard Meier", "Weill Hall",pts2);
         blueprints.put(new Tuple<>(bp2.getAuthor(),bp2.getName()), bp2);
         
     }    
@@ -47,7 +48,7 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
             throw new BlueprintPersistenceException("The given blueprint already exists: "+bp);
         }
         else{
-            blueprints.put(new Tuple<>(bp.getAuthor(),bp.getName()), bp);
+            blueprints.putIfAbsent(new Tuple<>(bp.getAuthor(),bp.getName()), bp);
         }        
     }
 

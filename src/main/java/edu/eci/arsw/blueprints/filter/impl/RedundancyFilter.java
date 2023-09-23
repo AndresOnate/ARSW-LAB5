@@ -16,15 +16,22 @@ public class RedundancyFilter implements BlueprintFilter {
     @Override
     public Blueprint filterBlueprint(Blueprint bp) {
         List<Point> points = bp.getPoints();
+        if(points.size() == 1){
+            return bp;
+        }
         List<Point> filteredPoints = new ArrayList<>();
-        for (int i = 1; i < points.size(); i++) {
+        int pointsSize = points.size();
+        for (int i = 0; i < points.size() -1; i++) {
             Point currentPoint = points.get(i);
-            Point previousPoint = points.get(i - 1);
-            if (!currentPoint.equals(previousPoint)) {
+            Point nextPoint = points.get(i + 1);
+            if (!currentPoint.equals(nextPoint)) {
                 filteredPoints.add(currentPoint);
-
+            }
+            if( (i == pointsSize-2) && (pointsSize% 3 == 0)){
+                filteredPoints.add(points.get(pointsSize-1));
             }
         }
+
         bp.setPoints(filteredPoints);
         return bp;
     }

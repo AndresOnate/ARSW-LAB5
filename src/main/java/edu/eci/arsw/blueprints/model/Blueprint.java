@@ -50,6 +50,14 @@ public class Blueprint {
         this.points = points;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "Blueprint{" + "author=" + author + ", name=" + name + '}';
